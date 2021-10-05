@@ -1,0 +1,48 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/restfultest
+    username: postgres
+    password: twotone365
+
+# 다국어처리 step2: 다국어파일의 이름을 지정한다. (여기서는 messages) -> step3: resources폴더에 messages.properties 생성
+  messages:
+    basename: messages
+
+  security:
+    user:
+      name: username
+      password: twotone365
+
+  jpa:
+    hibernate:
+      # 테스트용 : 매번 DB를 지우고 새로만드는 옵션 (운영 시 사용안함)
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        # show-sql: true  // 이 구문은 화면에 print구문으로 SQL을 보여준다. (운영 시 사용안함)
+        # PostgreSQL에 더 최적화 된 SQL을 생성하게 해준다.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # PostgreSQL에서 구현하지 않아 warning을 표시하는 내용을 지우는 구문
+        jdbc.lob.non_contextual_creation: true
+        # JPA가 만든 쿼리를 화면에 표시 할 때 SQL 형식으로 표시
+        format_sql: true
+        # batch-size 지정으로 in query로 로딩
+        default_batc1h_fetch_size: 1000
+    # transaction이 끝나면 Connection을 반환함.
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      springframework: info
+
